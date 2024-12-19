@@ -17,7 +17,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/auth/register", // Replace with your backend deployment link
+        "https://password-reset-fuax.onrender.com/api/v1/auth/register", // Replace with your backend deployment link
         {
           method: "POST",
           headers: {

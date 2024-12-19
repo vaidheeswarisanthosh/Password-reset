@@ -39,69 +39,9 @@ const authControllers={
       },
 
 
-    //    forgotPassword:async(req,res)=>{
-    //     const { email } = req.body;
-
-    //     // Check if user exists
-    //     const user = await User.findOne({ email });
-    //     if (!user) {
-    //       return res.status(404).json({ message: 'User not found' });
-    //     }
-      
-    //     // Create a reset token
-    //     const resetToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      
-    //     // Generate the reset link
-    //     const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-      
-    //     // Send reset email
-    //     try {
-    //       await sendEmail(email, resetLink);
-    //       res.status(200).json({ message: 'Password reset email sent' });
-    //     } catch (error) {
-    //       console.error(error);
-    //       res.status(500).json({ message: 'Error sending email' });
-    //     }
-    //   },
-
-    //   resetPassword:async(req,res)=>{
-
-    //   const { token, newPassword } = req.body;
-
-    //   if (!token || !newPassword) {
-    //     return res.status(400).json({ message: 'Token and new password are required.' });
-    //   }
     
-    //   try {
-    //     // Verify the token
-    //     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
-    //     // Find the user by email (from the token)
-    //     const user = await User.findOne({ email: decoded.email });
-    
-    //     if (!user) {
-    //       return res.status(400).json({ message: 'Invalid token or user not found' });
-    //     }
-    
-    //     // Hash the new password
-    //     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    //     user.password = hashedPassword;
-    
-    //     // Save the updated user password
-    //     await user.save();
-    
-    //     res.json({ message: 'Password reset successfully.' });
-    //   } catch (error) {
-    //     res.status(400).json({ message: 'Invalid or expired token' });
-    //   }
-    // }  
 
-
-
-
-
-
-     forgotPassword : async (req, res) => {
+    forgotPassword : async (req, res) => {
       const { email } = req.body;
     
       try {
@@ -112,11 +52,12 @@ const authControllers={
         const resetToken = jwt.sign(
           { userId: user._id },
           process.env.JWT_SECRET,
-          { expiresIn: '1h' } // Token expires in 1 hour
+         
         );
     
         // Create the reset link
-        const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+        const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
+        
     
         // Send email using Nodemailer
         const transporter = nodemailer.createTransport({
@@ -144,6 +85,7 @@ const authControllers={
     // Reset password - Update user's password
      resetPassword : async (req, res) => {
       const { token, newPassword } = req.body;
+      console.log(token);
     
       if (!token || !newPassword) {
         return res.status(400).json({ message: 'Token and new password are required.' });

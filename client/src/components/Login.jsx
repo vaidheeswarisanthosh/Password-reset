@@ -16,7 +16,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/auth/login",
+        "https://password-reset-fuax.onrender.com/api/v1/auth/login",
         {
           method: "POST",
           headers: {
